@@ -1,27 +1,25 @@
 # डोर Creation — Premium Indian Ethnic Wear
 
-> **Important:** [github.com/Kapil072/decore-ai](https://github.com/Kapil072/decore-ai) is your **code repository** (files + README). It is **not** your live website.  
-> To put the store online, deploy to **Vercel** (free) — steps below.
+## Live website (hosted from this repo)
 
-E-commerce storefront for **Dor Creation** (Indore): kurtas, kurta sets, lehengas, sarees, and co-ord sets.
+After GitHub Actions runs, your store is live at:
 
-## Deploy your live website (Vercel)
+**https://kapil072.github.io/decore-ai/**
 
-1. Go to [vercel.com](https://vercel.com) and sign in with **GitHub**.
-2. Click **Add New Project** → import **`Kapil072/decore-ai`**.
-3. Vercel auto-detects Next.js. Click **Deploy** (defaults are fine).
-4. After deploy, open the URL Vercel gives you (e.g. `decore-ai.vercel.app`) — that is your **live site**.
-5. In Vercel → **Settings → Environment Variables**, add:
+| What | URL |
+|------|-----|
+| **Live shop** | https://kapil072.github.io/decore-ai/ |
+| **Code on GitHub** | https://github.com/Kapil072/decore-ai |
 
-| Variable | Value |
-|----------|--------|
-| `NEXTAUTH_SECRET` | Any long random string |
-| `NEXTAUTH_URL` | Your Vercel URL (e.g. `https://decore-ai.vercel.app`) |
-| `DATABASE_URL` | `file:./prisma/dev.db` (optional; shop works without DB) |
+> GitHub’s repo page only shows this README. The **live site** is the link above.
 
-Redeploy after adding variables.
+### One-time setup (if the live link does not work yet)
 
-**Custom domain:** Vercel → Project → **Domains** → add your domain.
+1. Open **https://github.com/Kapil072/decore-ai/settings/pages**
+2. Under **Build and deployment** → **Source**, choose **GitHub Actions**
+3. Push to `main` (or run the **Deploy live site to GitHub Pages** workflow manually)
+
+Every push to `main` redeploys the site automatically.
 
 ---
 
@@ -32,28 +30,20 @@ git clone https://github.com/Kapil072/decore-ai.git
 cd decore-ai
 npm install
 cp .env.example .env
-# Edit .env — set NEXTAUTH_SECRET
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-Optional (database + admin):
-
-```bash
-npx prisma migrate dev
-npx prisma db seed
-```
-
 ## Features
 
 - Mobile-friendly shop, wishlist, cart
-- Razorpay + WhatsApp ordering
-- Admin dashboard (needs database)
+- WhatsApp ordering (works on live site)
+- Razorpay + admin (local / Vercel only — not on GitHub Pages)
 
-## Tech stack
+## Full server deploy (Vercel — optional)
 
-Next.js 16 · React 19 · Tailwind CSS 4 · Prisma · NextAuth · Razorpay
+For Razorpay, admin, and database: deploy on [Vercel](https://vercel.com) from this repo and set `NEXTAUTH_SECRET`, `DATABASE_URL`, and Razorpay keys.
 
 ## Contact
 

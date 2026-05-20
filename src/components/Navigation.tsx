@@ -1,8 +1,10 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import { withBasePath } from '@/lib/paths';
 
 const navLinks = [
   { label: 'Shop',        id: 'shop',     href: '/shop' },
@@ -64,7 +66,7 @@ export default function Navigation() {
 
   const go = (link: typeof navLinks[0]) => {
     setMenuOpen(false);
-    if (link.href) { window.location.href = link.href; return; }
+    if (link.href) { window.location.href = withBasePath(link.href); return; }
     scrollTo(link.id);
   };
 
@@ -101,7 +103,7 @@ export default function Navigation() {
       >
         <div className="container" style={{ display: 'flex', alignItems: 'center', height: '64px', gap: 'clamp(12px, 3vw, 32px)' }}>
           {/* Logo */}
-          <a href="/" style={{ textDecoration: 'none', cursor: 'none', flexShrink: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <Link href="/" style={{ textDecoration: 'none', cursor: 'none', flexShrink: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
             <Image
               src="/dor-creation-logo.png"
               alt="डोर Creation Logo"
@@ -119,7 +121,7 @@ export default function Navigation() {
             }}>
               डोर <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600, fontSize: '0.9rem', letterSpacing: '0.18em' }}>CREATION</span>
             </span>
-          </a>
+          </Link>
 
           {/* Desktop nav links — only show on md+ using a div that's flex on desktop */}
           <div id="desktop-nav-links" style={{ flex: 1, display: 'flex', justifyContent: 'center', gap: '1.8rem' }}>
@@ -139,14 +141,14 @@ export default function Navigation() {
           {/* Right icons */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(10px, 2vw, 16px)', flexShrink: 0 }}>
             {/* Wishlist */}
-            <a href="/wishlist"
+            <Link href="/wishlist"
               style={{ background:'none', border:'none', cursor:'none', color:textColor, display:'flex', transition:'color 0.25s', textDecoration:'none' }}
               aria-label="Wishlist"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
               </svg>
-            </a>
+            </Link>
 
             {/* Search */}
             <button
