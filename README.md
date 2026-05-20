@@ -1,38 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# डोर Creation — Premium Indian Ethnic Wear
 
-## Getting Started
+E-commerce storefront for **Dor Creation** (Indore): kurtas, kurta sets, lehengas, sarees, and co-ord sets. Built with Next.js, with shop, wishlist, cart, Razorpay checkout, and WhatsApp ordering.
 
-First, run the development server:
+**Repository:** [github.com/Kapil072/decore-ai](https://github.com/Kapil072/decore-ai)
+
+## Features
+
+- Responsive, mobile-friendly UI
+- Product catalog with filters (category, price, size)
+- Shopping cart (local storage) + Razorpay online pay
+- WhatsApp order fallback
+- Wishlist
+- Admin dashboard (NextAuth + Prisma)
+- Search overlay
+
+## Tech stack
+
+- [Next.js 16](https://nextjs.org/) (App Router)
+- React 19, TypeScript
+- Tailwind CSS 4
+- Prisma (SQLite)
+- NextAuth, Razorpay
+
+## Getting started
+
+### Prerequisites
+
+- Node.js 20+
+- npm
+
+### Install & run
 
 ```bash
+git clone https://github.com/Kapil072/decore-ai.git
+cd decore-ai
+npm install
+npx prisma generate
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env` file in the project root (never commit this file):
 
-## Learn More
+```env
+# Database (SQLite example)
+DATABASE_URL="file:./dev.db"
 
-To learn more about Next.js, take a look at the following resources:
+# NextAuth
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your-secret-here"
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Razorpay (optional — for Pay Online)
+RAZORPAY_KEY_ID="your_key_id"
+RAZORPAY_KEY_SECRET="your_key_secret"
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Run migrations and seed (first time):
 
-## Deploy on Vercel
+```bash
+npx prisma migrate dev
+npx prisma db seed
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run start` | Run production server |
+| `npm run lint` | ESLint |
 
+## Deploy
 
+Works on [Vercel](https://vercel.com), Netlify, or any Node host that supports Next.js. Set the same environment variables in your hosting dashboard. For production, use a hosted database (e.g. PostgreSQL) instead of local SQLite.
+
+## Contact (store)
+
+- WhatsApp: +91-7976521214 / +91-9039174549
+- Instagram: [@dor_creation_indore](https://www.instagram.com/dor_creation_indore)
+
+## License
+
+Private — © Dor Creation, Indore.
