@@ -2,14 +2,25 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { PrismaClient } from '@prisma/client';
 
+export const dynamic = 'force-dynamic';
+
 const prisma = new PrismaClient();
 
 export default async function AdminDashboardPage() {
   const session = await getServerSession(authOptions);
-  
-  const productCount = await prisma.product.count();
-  const orderCount = await prisma.order.count();
-  const userCount = await prisma.user.count();
+
+  let productCount = 0;
+  let orderCount = 0;
+  let userCount = 0;
+  try {
+    [productCount, orderCount, userCount] = await Promise.all([
+      prisma.product.count(),
+      prisma.order.count(),
+      prisma.user.count(),
+    ]);
+  } catch {
+    // DB may be unavailable on serverless until configured
+  }
 
   return (
     <div>

@@ -1,88 +1,63 @@
 # डोर Creation — Premium Indian Ethnic Wear
 
-E-commerce storefront for **Dor Creation** (Indore): kurtas, kurta sets, lehengas, sarees, and co-ord sets. Built with Next.js, with shop, wishlist, cart, Razorpay checkout, and WhatsApp ordering.
+> **Important:** [github.com/Kapil072/decore-ai](https://github.com/Kapil072/decore-ai) is your **code repository** (files + README). It is **not** your live website.  
+> To put the store online, deploy to **Vercel** (free) — steps below.
 
-**Repository:** [github.com/Kapil072/decore-ai](https://github.com/Kapil072/decore-ai)
+E-commerce storefront for **Dor Creation** (Indore): kurtas, kurta sets, lehengas, sarees, and co-ord sets.
 
-## Features
+## Deploy your live website (Vercel)
 
-- Responsive, mobile-friendly UI
-- Product catalog with filters (category, price, size)
-- Shopping cart (local storage) + Razorpay online pay
-- WhatsApp order fallback
-- Wishlist
-- Admin dashboard (NextAuth + Prisma)
-- Search overlay
+1. Go to [vercel.com](https://vercel.com) and sign in with **GitHub**.
+2. Click **Add New Project** → import **`Kapil072/decore-ai`**.
+3. Vercel auto-detects Next.js. Click **Deploy** (defaults are fine).
+4. After deploy, open the URL Vercel gives you (e.g. `decore-ai.vercel.app`) — that is your **live site**.
+5. In Vercel → **Settings → Environment Variables**, add:
 
-## Tech stack
+| Variable | Value |
+|----------|--------|
+| `NEXTAUTH_SECRET` | Any long random string |
+| `NEXTAUTH_URL` | Your Vercel URL (e.g. `https://decore-ai.vercel.app`) |
+| `DATABASE_URL` | `file:./prisma/dev.db` (optional; shop works without DB) |
 
-- [Next.js 16](https://nextjs.org/) (App Router)
-- React 19, TypeScript
-- Tailwind CSS 4
-- Prisma (SQLite)
-- NextAuth, Razorpay
+Redeploy after adding variables.
 
-## Getting started
+**Custom domain:** Vercel → Project → **Domains** → add your domain.
 
-### Prerequisites
+---
 
-- Node.js 20+
-- npm
-
-### Install & run
+## Local development
 
 ```bash
 git clone https://github.com/Kapil072/decore-ai.git
 cd decore-ai
 npm install
-npx prisma generate
+cp .env.example .env
+# Edit .env — set NEXTAUTH_SECRET
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-### Environment variables
-
-Create a `.env` file in the project root (never commit this file):
-
-```env
-# Database (SQLite example)
-DATABASE_URL="file:./dev.db"
-
-# NextAuth
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="your-secret-here"
-
-# Razorpay (optional — for Pay Online)
-RAZORPAY_KEY_ID="your_key_id"
-RAZORPAY_KEY_SECRET="your_key_secret"
-```
-
-Run migrations and seed (first time):
+Optional (database + admin):
 
 ```bash
 npx prisma migrate dev
 npx prisma db seed
 ```
 
-## Scripts
+## Features
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Development server |
-| `npm run build` | Production build |
-| `npm run start` | Run production server |
-| `npm run lint` | ESLint |
+- Mobile-friendly shop, wishlist, cart
+- Razorpay + WhatsApp ordering
+- Admin dashboard (needs database)
 
-## Deploy
+## Tech stack
 
-Works on [Vercel](https://vercel.com), Netlify, or any Node host that supports Next.js. Set the same environment variables in your hosting dashboard. For production, use a hosted database (e.g. PostgreSQL) instead of local SQLite.
+Next.js 16 · React 19 · Tailwind CSS 4 · Prisma · NextAuth · Razorpay
 
-## Contact (store)
+## Contact
 
 - WhatsApp: +91-7976521214 / +91-9039174549
 - Instagram: [@dor_creation_indore](https://www.instagram.com/dor_creation_indore)
 
-## License
-
-Private — © Dor Creation, Indore.
+© Dor Creation, Indore.

@@ -1,10 +1,12 @@
 import { NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
 
-const razorpay = new Razorpay({
-  key_id:     process.env.RAZORPAY_KEY_ID     || '',
-  key_secret: process.env.RAZORPAY_KEY_SECRET || '',
-});
+function getRazorpay() {
+  const key_id = process.env.RAZORPAY_KEY_ID;
+  const key_secret = process.env.RAZORPAY_KEY_SECRET;
+  if (!key_id || !key_secret) return null;
+  return new Razorpay({ key_id, key_secret });
+}
 
 export async function POST(request: Request) {
   try {
@@ -14,7 +16,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid order amount' }, { status: 400 });
     }
 
-    if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+    const razorpay = getRazorpay();
+    if (!razorpay) {
       return NextResponse.json(
         { error: 'Payment gateway not configured. Please use WhatsApp ordering.' },
         { status: 503 }
