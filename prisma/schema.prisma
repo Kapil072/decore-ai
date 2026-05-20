@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("USER") // "USER" or "ADMIN"
+  createdAt DateTime @default(now())
+
+  orders    Order[]
+  cart      CartItem[]
+  wishlist  WishlistItem[]
+}
+
+model Product {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  name             String
+  category         String
+  price            Int
+  originalPrice    Int?
+  tag              String?
+  tagType          String?  // 'gold', 'terra', 'new'
+  description      String
+  longDescription  String
+  accent           String
+  bgColor          String
+  icon             String
+  fabric           String
+  inStock          Boolean  @default(true)
+  rating           Float    @default(0)
+  reviewCount      Int      @default(0)
+
+  sizes            ProductSize[]
+  colors           ProductColor[]
+  careInstructions ProductCareInstruction[]
+  reviews          ProductReview[]
+  orderItems       OrderItem[]
+  cartItems        CartItem[]
+  wishlistItems    WishlistItem[]
+
+  createdAt        DateTime @default(now())
+}
+
+model ProductSize {
+  id        String  @id @default(cuid())
+  size      String
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model ProductColor {
+  id        String  @id @default(cuid())
+  name      String
+  hex       String
+  available Boolean @default(true)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model ProductCareInstruction {
+  id          String  @id @default(cuid())
+  instruction String
+  productId   String
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model ProductReview {
+  id        String  @id @default(cuid())
+  name      String
+  location  String
+  rating    Int
+  date      String
+  text      String
+  verified  Boolean @default(false)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status        String      @default("PENDING") // PENDING, PAID, SHIPPED, DELIVERED
+  total         Int
+  paymentId     String?
+  items         OrderItem[]
+  createdAt     DateTime    @default(now())
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+  size      String
+  qty       Int
+  price     Int
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  size      String
+  qty       Int
+
+  @@unique([userId, productId, size])
+}
+
+model WishlistItem {
+  id        String  @id @default(cuid())
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+}
